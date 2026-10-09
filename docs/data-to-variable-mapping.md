@@ -7,11 +7,27 @@ variables have no public-data counterpart.
 
 | Model quantity | Construction from trip records |
 |---|---|
-| Completed trips | Row count per day (`data/aggregates/fhvhv_2025-06_daily.csv`) |
-| Request-to-pickup (waiting) time | `pickup_datetime − request_datetime`, daily mean |
-| Fares | `base_passenger_fare` plus applicable tolls and surcharges, daily mean |
-| Trip-level driver compensation | `driver_pay`, daily mean |
-| Trip distance / duration | `trip_miles`, `trip_time`, daily means |
+| Completed trips | Row count per day (`data/aggregates/fhvhv_2025-06_daily.csv`); per company per month (`data/aggregates/fhvhv_monthly.csv`) |
+| Request-to-pickup (waiting) time | `pickup_datetime − request_datetime`, daily mean (and monthly per-company mean) |
+| Fares | `base_passenger_fare` (before tolls and surcharges), daily mean (and monthly per-company mean) |
+| Trip-level driver compensation | `driver_pay`, daily mean (and monthly per-company mean) |
+| Trip distance / duration | `trip_miles`, `trip_time`, daily means (and monthly per-company means) |
+
+## Long series (`data/aggregates/fhvhv_monthly.csv`)
+
+The 91-month per-company series (February 2019 – August 2026) supports three uses:
+
+- **Long-run trip-demand reference** — monthly trip volumes anchor the scale of demand
+  the model must reproduce over multi-year horizons.
+- **External-shock recovery test** — the 2020 demand collapse is an external shock, not
+  evidence of endogenous overshoot and decline; it can test how the model recovers from
+  an imposed demand drop.
+- **Rough check on the growth loop** — the Uber/Lyft trip split offers a loose
+  cross-check on the rider–driver–waiting-time reinforcing loop.
+
+It cannot calibrate complaints, backlog, recovery capacity, or perceived quality (none
+appear in the TLC records), and it cannot test the decentralized funding constraint:
+Uber and Lyft are large centralized platforms with access to outside capital.
 
 ## Benchmarked externally
 

@@ -8,6 +8,7 @@ Public trip-record and industry data supporting a system dynamics study of growt
   - `data_dictionary_trip_records_hvfhs.pdf` — official NYC TLC data dictionary for high-volume for-hire vehicle trip records
   - `samples/fhvhv_tripdata_2025-06_sample1pct.parquet` — 1% uniform random sample (seed 681) of June 2025 NYC high-volume for-hire vehicle trips
   - `aggregates/fhvhv_2025-06_daily.csv` — daily aggregates for June 2025: completed trips, mean request-to-pickup time, mean fare, mean driver pay, mean trip miles, mean trip time
+  - `aggregates/fhvhv_monthly.csv` — monthly per-company aggregates, February 2019 through August 2026 (91 months): trips, mean request-to-pickup time, mean fare, mean driver pay, mean trip miles, mean trip time; companies Uber (HV0003), Lyft (HV0005), Juno (HV0002), Via (HV0004)
 - `docs/` — definitions, mappings, and references
   - `field-definitions.md` — vetted definitions of every trip-record field used, including common misinterpretations
   - `data-to-variable-mapping.md` — how each observable model quantity is constructed from the trip records, and which model variables have no public-data counterpart
@@ -15,7 +16,8 @@ Public trip-record and industry data supporting a system dynamics study of growt
   - `literature.md` — verified reference list with DOIs
 - `scripts/` — reproducible data preparation
   - `download_tlc_data.sh` — fetches the full monthly trip-record files from the NYC TLC
-  - `make_sample.py` — regenerates the 5% sample and the daily aggregates from a downloaded month
+  - `make_sample.py` — regenerates the 1% sample and the daily aggregates from a downloaded month
+  - `tlc_monthly.py` — downloads each monthly file in turn, aggregates per-company monthly statistics, appends to `data/aggregates/fhvhv_monthly.csv`, and deletes the raw file; resume-safe
 
 ## Data sources
 
@@ -38,6 +40,6 @@ Two definitions matter for any analysis built on these files:
 
 ## Citation
 
-Ibrahim, O. E. (2026). Growth, Investment in Service Recovery, and Quality Erosion in Decentralized Ride-Hailing Platforms: A System Dynamics Study. ISYE 681, Northern Illinois University.
+Oyeyinka, Ibrahim E. (2026). Growth, Investment in Service Recovery, and Quality Erosion in Decentralized Ride-Hailing Platforms: A System Dynamics Study. ISYE 681, Northern Illinois University.
 
 Trip records: New York City Taxi and Limousine Commission, Trip Record Data (public data).
