@@ -1,45 +1,33 @@
 # Growth, Investment in Service Recovery, and Quality Erosion in Decentralized Ride-Hailing Platforms
 
-Public trip-record and industry data supporting a system dynamics study of growth, service-recovery investment, and quality erosion in decentralized ride-hailing platforms (ISYE 681, Northern Illinois University).
+Trip records and documentation for a system dynamics study of growth, service-recovery investment, and quality erosion in decentralized ride-hailing platforms (ISYE 681, Northern Illinois University).
 
-## Contents
+## Data
 
-- `data/` — trip-record extracts and aggregates
-  - `data_dictionary_trip_records_hvfhs.pdf` — official NYC TLC data dictionary for high-volume for-hire vehicle trip records
-  - `samples/fhvhv_tripdata_2025-06_sample1pct.parquet` — 1% uniform random sample (seed 681) of June 2025 NYC high-volume for-hire vehicle trips
-  - `aggregates/fhvhv_2025-06_daily.csv` — daily aggregates for June 2025: completed trips, mean request-to-pickup time, mean fare, mean driver pay, mean trip miles, mean trip time
-  - `aggregates/fhvhv_monthly.csv` — monthly per-company aggregates, February 2019 through August 2026 (91 months): trips, mean request-to-pickup time, mean fare, mean driver pay, mean trip miles, mean trip time; companies Uber (HV0003), Lyft (HV0005), Juno (HV0002), Via (HV0004)
-- `docs/` — definitions, mappings, and references
-  - `field-definitions.md` — vetted definitions of every trip-record field used, including common misinterpretations
-  - `data-to-variable-mapping.md` — how each observable model quantity is constructed from the trip records, and which model variables have no public-data counterpart
-  - `assumed-parameters.md` — parameters not observable in public data, documented with the ranges examined in sensitivity analysis
-  - `literature.md` — verified reference list with DOIs
-- `scripts/` — reproducible data preparation
-  - `download_tlc_data.sh` — fetches the full monthly trip-record files from the NYC TLC
-  - `make_sample.py` — regenerates the 1% sample and the daily aggregates from a downloaded month
-  - `tlc_monthly.py` — downloads each monthly file in turn, aggregates per-company monthly statistics, appends to `data/aggregates/fhvhv_monthly.csv`, and deletes the raw file; resume-safe
-
-## Data sources
-
-All trip records are published by the New York City Taxi and Limousine Commission (TLC) as public data:
+All trip records are public data from the NYC Taxi and Limousine Commission (TLC):
 
 - TLC Trip Record Data: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
-- High-volume for-hire vehicle data dictionary: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_hvfhs.pdf (copy included in `data/`)
-- TLC annual reports (regulatory complaint summaries used as external complaint-incidence benchmarks)
+- Data dictionary: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_hvfhs.pdf (copy in `data/`)
 
-Full monthly files are several hundred megabytes each and are not stored here; `scripts/download_tlc_data.sh` retrieves them, and `scripts/make_sample.py` reproduces the included sample and aggregates exactly.
+| File | Contents |
+|---|---|
+| `data/samples/fhvhv_tripdata_2025-06_sample1pct.parquet` | 1% uniform random sample (seed 681) of June 2025 high-volume for-hire vehicle trips (~197k trips) |
+| `data/aggregates/fhvhv_2025-06_daily.csv` | Daily aggregates, June 2025: trips, mean request-to-pickup time, mean fare, mean driver pay, mean trip miles, mean trip time |
+| `data/aggregates/fhvhv_monthly.csv` | Monthly per-company aggregates, Feb 2019 – Aug 2026 (91 months): same fields; Uber (HV0003), Lyft (HV0005), Juno (HV0002), Via (HV0004) |
+| `data/data_dictionary_trip_records_hvfhs.pdf` | Official TLC field definitions |
 
-## Reading the data correctly
+Raw monthly files are ~500 MB each and are not stored here. `scripts/download_tlc_data.sh` fetches them; `scripts/make_sample.py` and `scripts/tlc_monthly.py` regenerate the sample and the aggregates exactly.
 
-Two definitions matter for any analysis built on these files:
+## Definitions that matter
 
-- **Passenger waiting time** is `pickup_datetime − request_datetime`. The `trip_time` field measures in-vehicle time only and is not waiting time.
-- **`driver_pay`** is per-trip compensation. Dividing it by `trip_time` gives an occupied-trip hourly rate, not true driver earnings, and `fare − driver_pay` is not platform revenue.
+- **Waiting time** = `pickup_datetime − request_datetime`. `trip_time` is in-vehicle time only.
+- **`driver_pay`** is per-trip compensation, not hourly earnings.
+- **`fare − driver_pay` is not platform revenue.** Taxes, surcharges, and fees sit between them.
 
-`docs/field-definitions.md` documents each field and the misinterpretations it guards against.
+Details: `docs/field-definitions.md`. Model-variable mapping: `docs/data-to-variable-mapping.md`. Assumed parameters: `docs/assumed-parameters.md`. References: `docs/literature.md`.
 
 ## Citation
 
 Oyeyinka, Ibrahim E. (2026). Growth, Investment in Service Recovery, and Quality Erosion in Decentralized Ride-Hailing Platforms: A System Dynamics Study. ISYE 681, Northern Illinois University.
 
-Trip records: New York City Taxi and Limousine Commission, Trip Record Data (public data).
+Trip records: NYC Taxi and Limousine Commission, Trip Record Data (public data).
