@@ -13,7 +13,7 @@ All trip records are public data from the NYC Taxi and Limousine Commission (TLC
 |---|---|
 | `data/samples/fhvhv_tripdata_2025-06_sample1pct.parquet` | 1% uniform random sample (seed 681) of June 2025 high-volume for-hire vehicle trips (~197k trips) |
 | `data/aggregates/fhvhv_2025-06_daily.csv` | Daily aggregates, June 2025: trips, mean request-to-pickup time, mean fare, mean driver pay, mean trip miles, mean trip time |
-| `data/aggregates/fhvhv_monthly.csv` | Monthly per-company aggregates, Feb 2019 – Aug 2026 (91 months): same fields; Uber (HV0003), Lyft (HV0005), Juno (HV0002), Via (HV0004) |
+| `data/aggregates/fhvhv_monthly.csv` | Monthly per-company aggregates, Feb 2019 – Aug 2026 (91 months): trips, trips per day, mean request-to-pickup time, mean fare, mean driver pay, mean trip miles, mean trip time; Uber (HV0003), Lyft (HV0005), Juno (HV0002, through Nov 2019), Via (HV0004, through Oct 2021). Via's `driver_pay` values are unusable and left blank. |
 | `data/data_dictionary_trip_records_hvfhs.pdf` | Official TLC field definitions |
 
 Raw monthly files are ~500 MB each and are not stored here. `scripts/download_tlc_data.sh` fetches them; `scripts/make_sample.py` and `scripts/tlc_monthly.py` regenerate the sample and the aggregates exactly.

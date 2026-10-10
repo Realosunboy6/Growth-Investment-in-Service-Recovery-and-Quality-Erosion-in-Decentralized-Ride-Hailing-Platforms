@@ -66,10 +66,14 @@ def main():
             for s, mc in [("fare_sum", "mean_fare"), ("pay_sum", "mean_driver_pay"),
                           ("miles_sum", "mean_miles"), ("dur_sum", "mean_duration_min")]:
                 g[mc] = g[s] / g["trips"] if s in g.columns else float("nan")
+            g["mean_duration_min"] = g["mean_duration_min"] / 60  # trip_time is in seconds
             g = g.reset_index().rename(columns={"hvfhs_license_num": "license"})
+            g.loc[g["license"] == "HV0004", "mean_driver_pay"] = float("nan")  # Via pay unusable
+            y, mo = int(m[:4]), int(m[5:7])
+            g["trips_per_day"] = (g["trips"] / __import__("calendar").monthrange(y, mo)[1]).round(1)
             g.insert(0, "month", m)
             g["company"] = g["license"].map(NAMES).fillna("Other")
-            keep = ["month", "license", "company", "trips", "mean_wait_min",
+            keep = ["month", "license", "company", "trips", "trips_per_day", "mean_wait_min",
                     "mean_fare", "mean_driver_pay", "mean_miles", "mean_duration_min"]
             if missing:
                 g["missing_cols"] = ";".join(missing)

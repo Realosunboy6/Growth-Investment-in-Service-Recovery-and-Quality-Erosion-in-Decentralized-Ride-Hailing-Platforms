@@ -11,7 +11,12 @@ variables have no public-data counterpart.
 | Request-to-pickup (waiting) time | `pickup_datetime − request_datetime`, daily mean (and monthly per-company mean) |
 | Fares | `base_passenger_fare` (before tolls and surcharges), daily mean (and monthly per-company mean) |
 | Trip-level driver compensation | `driver_pay`, daily mean (and monthly per-company mean) |
-| Trip distance / duration | `trip_miles`, `trip_time`, daily means (and monthly per-company means) |
+| Trip distance / duration | `trip_miles`, `trip_time` (converted from seconds to minutes), daily means (and monthly per-company means) |
+
+Data notes: Juno's series ends November 2019 and Via's ends October 2021, so only
+Uber and Lyft span the full 91 months. Via's `driver_pay` values are unusable
+($0.35–$14.41, 7% of fare in 2019) and are left blank in the monthly file. The
+monthly file includes `trips_per_day` so months of different lengths compare directly.
 
 ## Long series (`data/aggregates/fhvhv_monthly.csv`)
 
