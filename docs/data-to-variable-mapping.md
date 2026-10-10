@@ -18,6 +18,15 @@ Uber and Lyft span the full 91 months. Via's `driver_pay` values are unusable
 ($0.35–$14.41, 7% of fare in 2019) and are left blank in the monthly file. The
 monthly file includes `trips_per_day` so months of different lengths compare directly.
 
+## Driver and vehicle series (`data/aggregates/fhv_industry_indicators_monthly.csv`)
+
+Monthly unique drivers and vehicles for FHV – High Volume (Jan 2015 – Aug 2026)
+support one validation use: the COVID shock as a test of the driver loop's delay.
+Drivers fell from 79,282 (Feb 2020) to 22,390 (Apr 2020) and were still 26% below
+pre-COVID levels in Jun 2021 while trips recovered faster — the supply lag behind
+the observed wait-time spike. `avg_minutes_per_trip` is zero before Jun 2017
+(source-data gap, left as published).
+
 ## Long series (`data/aggregates/fhvhv_monthly.csv`)
 
 The 91-month per-company series (February 2019 – August 2026) supports three uses:
